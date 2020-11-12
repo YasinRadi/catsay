@@ -4,10 +4,10 @@ extern crate colored;
 use colored::*;
 use structopt::StructOpt;
 use failure::ResultExt;
+use exitfailure::ExitFailure;
 use std::{
     path,
-    fs,
-    error
+    fs
 };
 
 
@@ -34,7 +34,7 @@ fn print_cat(eye: &str) {
     println!("   =( I )=");
 }
 
-fn main() -> Result<(), failure::Error> {
+fn main() -> Result<(), ExitFailure> {
     let options = Options::from_args();
     let message = options.message;
     let eye = if options.dead { "x" }  else { "o" };
