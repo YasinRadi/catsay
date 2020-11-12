@@ -2,6 +2,7 @@ extern crate structopt;
 extern crate colored;
 
 use structopt::StructOpt;
+use std::path;
 use colored::*;
 
 #[derive(StructOpt)]
@@ -12,7 +13,11 @@ struct Options {
 
     #[structopt(short = "d", long = "dead")]
     /// Make the cat appear dead
-    dead: bool
+    dead: bool,
+
+    #[structopt(short = "f", long = "file", parse(from_os_str))]
+    /// Load a cat picture from the specified file
+    catfile: Option<path::PathBuf>
 }
 
 fn main() {
