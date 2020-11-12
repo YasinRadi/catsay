@@ -2,7 +2,10 @@ extern crate structopt;
 extern crate colored;
 
 use structopt::StructOpt;
-use std::path;
+use std::{
+    path,
+    fs
+};
 use colored::*;
 
 #[derive(StructOpt)]
@@ -20,6 +23,14 @@ struct Options {
     catfile: Option<path::PathBuf>
 }
 
+fn print_cat(eye: &str) {
+    println!(" \\");
+    println!("  \\");
+    println!("     /\\_/\\");
+    println!("    ({eye}  {eye} )", eye = eye.green().bold());
+    println!("   =( I )=");
+}
+
 fn main() {
     let options = Options::from_args();
     let message = options.message;
@@ -32,9 +43,16 @@ fn main() {
     println!("{}", message.bright_yellow()
         .underline()
         .on_purple());
-    println!(" \\");
-    println!("  \\");
-    println!("     /\\_/\\");
-    println!("    ({eye}  {eye} )", eye = eye.green().bold());
-    println!("   =( I )=");
+    
+    match &options.catfile {
+        Some (path) => {
+            let cat_template = fs::read_to_string(path)
+                .expect(&format!("could not read file {:?}", path));
+            let cat_img = cat_template.replace("{eye}", eye);
+            println!("{}", &cat_img);
+        },
+        None => {
+            print_cat(eye);
+        }
+    }
 }
