@@ -2,8 +2,8 @@ extern crate structopt;
 extern crate colored;
 
 use colored::*;
-use structopt::StructOpt;
 use failure::ResultExt;
+use structopt::StructOpt;
 use exitfailure::ExitFailure;
 use std::{
     path,
