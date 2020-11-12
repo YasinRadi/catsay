@@ -1,12 +1,15 @@
 extern crate structopt;
 extern crate colored;
 
+use colored::*;
 use structopt::StructOpt;
+use failure::ResultExt;
 use std::{
     path,
-    fs
+    fs,
+    error
 };
-use colored::*;
+
 
 #[derive(StructOpt)]
 struct Options {
@@ -31,7 +34,7 @@ fn print_cat(eye: &str) {
     println!("   =( I )=");
 }
 
-fn main() {
+fn main() -> Result<(), failure::Error> {
     let options = Options::from_args();
     let message = options.message;
     let eye = if options.dead { "x" }  else { "o" };
@@ -47,7 +50,7 @@ fn main() {
     match &options.catfile {
         Some (path) => {
             let cat_template = fs::read_to_string(path)
-                .expect(&format!("could not read file {:?}", path));
+                .with_context(|_| format!("could not read file {:?}", path))?;
             let cat_img = cat_template.replace("{eye}", eye);
             println!("{}", &cat_img);
         },
@@ -55,4 +58,6 @@ fn main() {
             print_cat(eye);
         }
     }
+
+    Ok(())
 }
