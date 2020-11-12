@@ -1,2 +1,2 @@
 # catsay
-Simple Rust-CLI application implementing catsay.
+Simple toy Rust-CLI application implementing catsay.
