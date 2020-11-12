@@ -26,11 +26,11 @@ struct Options {
     catfile: Option<path::PathBuf>
 }
 
-fn print_cat(eye: &str) {
+fn print_cat(eye: ColoredString) {
     println!(" \\");
     println!("  \\");
     println!("     /\\_/\\");
-    println!("    ({eye}  {eye} )", eye = eye.green().bold());
+    println!("    ({eye}  {eye} )", eye = eye);
     println!("   =( I )=");
 }
 
@@ -55,7 +55,7 @@ fn main() -> Result<(), ExitFailure> {
             println!("{}", &cat_img);
         },
         None => {
-            print_cat(eye);
+            print_cat(eye.green().bold());
         }
     }
 
